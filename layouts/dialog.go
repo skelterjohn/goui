@@ -1,6 +1,7 @@
 package layouts
 
 import (
+	"fmt"
 	"io"
 	"github.com/skelterjohn/goui"
 	"github.com/skelterjohn/goui/components"
@@ -39,6 +40,18 @@ func (me *Dialog) SetButton(button *components.Button) {
 }
 
 func (me *Dialog) Render(html io.Writer) (e error) {
+	_, e = fmt.Fprintf(html, "<dialog>\n")
+	if e != nil { panic(e) }
+	if me.message != nil {
+		e = me.message.Render(html)
+		if e != nil { panic(e) }
+	}
+	if me.button != nil {
+		e = me.button.Render(html)
+		if e != nil { panic(e) }
+	}
+	_, e = fmt.Fprintf(html, "</dialog>\n")
+	if e != nil { panic(e) }
 	return
 }
 

@@ -2,6 +2,7 @@ package components
 
 import (
 	"io"
+	"fmt"
 )
 
 type Label struct {
@@ -21,6 +22,12 @@ func (me *Label) SetText(text string) {
 func (me *Label) Render(html io.Writer) (e error) {
 	// write some html
 	// connect click to the js on the other end, somehow
+	_, e = fmt.Fprintf(html, "<label>\n")
+	if e != nil { panic(e) }
+	_, e = fmt.Fprintf(html, "%s\n", me.text)
+	if e != nil { panic(e) }
+	_, e = fmt.Fprintf(html, "</label>\n")
+	if e != nil { panic(e) }
 
 	return
 }

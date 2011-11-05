@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	window := goui.NewWindow("Example")
+	window := goui.NewWindow("Example 1", "exa1")
 	window.SetSize(500, 500)
 	window.Center()
 	
