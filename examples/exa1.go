@@ -8,11 +8,11 @@ import (
 
 func main() {
 	window := goui.NewWindow("Example")
-	window.ReSize(500, 500)
+	window.SetSize(500, 500)
 	window.Center()
 	
 	dlayout := layouts.NewDialogLayout()
-	window.Layout = dlayout
+	window.SetLayout(dlayout)
 	
 	label := components.NewLabel("Here is some text!")
 	dlayout.SetMessage(label)
