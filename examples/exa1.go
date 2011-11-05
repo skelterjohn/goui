@@ -11,7 +11,7 @@ func main() {
 	window.SetSize(500, 500)
 	window.Center()
 	
-	dlayout := layouts.NewDialogLayout()
+	dlayout := layouts.NewDialog()
 	window.SetLayout(dlayout)
 	
 	label := components.NewLabel("Here is some text!")

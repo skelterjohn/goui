@@ -2,8 +2,10 @@ package goui
 
 type Window struct {
 	title string
+	layout Layout
 	w, h int
 	dirty bool
+	X <-chan struct{}
 }
 
 func NewWindow(title string) (me *Window) {
@@ -19,6 +21,10 @@ func (me *Window) SetTitle(title string) {
 	me.dirty = true
 }
 
+func (me *Window) SetLayout(layout Layout) {
+	me.layout = layout
+}
+
 func (me *Window) SetSize(w, h int) {
 	me.w, me.h = w, h
 	me.dirty = true
@@ -29,6 +35,11 @@ func (me *Window) Update() {
 		//send a message to the client
 	}
 	me.dirty = false
+}
+
+func (me *Window) Show() {
+	//start serving
+	//open the window
 }
 
 func (me *Window) Center() {
