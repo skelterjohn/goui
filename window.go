@@ -3,10 +3,27 @@ package goui
 import (
 	"fmt"
 	"http"
+	"template"
 	"io"
 	"log"
 	_ "github.com/skelterjohn/goui/server"
 )
+
+const WindowHTMLTemplateFormat = `
+<html>
+<title>{{.Title}}</title>
+<body>
+{{ComponentWriter .Layout}}
+</body>
+</html>
+`
+
+var WindowHTMLTemplate = template.Must(ParseExecTemplate(WindowHTMLTemplateFormat))
+
+type WindowData struct {
+	Title string
+	Layout Layout
+}
 
 type Window struct {
 	w, h int
@@ -15,7 +32,8 @@ type Window struct {
 	path string
 	serving bool
 
-	title string
+	wd WindowData
+
 	layout Layout
 
 	X <-chan struct{}
@@ -31,12 +49,13 @@ func NewWindow(title, path string) (me *Window) {
 }
 
 func (me *Window) SetTitle(title string) {
-	me.title = title
+	me.wd.Title = title
 	me.dirty = true
 }
 
 func (me *Window) SetLayout(layout Layout) {
 	me.layout = layout
+	me.wd.Layout = layout
 }
 
 func (me *Window) SetSize(w, h int) {
@@ -76,7 +95,9 @@ func (me *Window) serve() {
 }
 
 func (me *Window) Render(html io.Writer) (e error) {
-	_, e = fmt.Fprintf(html, "<window title=\"%s\">\n", me.title)
+	e = WindowHTMLTemplate.Execute(html, me.wd)
+	/*
+	_, e = fmt.Fprintf(html, "<window title=\"%s\">\n", me.wd.Title)
 	if e != nil { panic(e) }
 	if me.layout != nil {
 		e = me.layout.Render(html)
@@ -84,6 +105,7 @@ func (me *Window) Render(html io.Writer) (e error) {
 	}
 	_, e = fmt.Fprintf(html, "</window>\n")
 	if e != nil { panic(e) }
+	*/
 	return
 }
 

@@ -1,33 +1,45 @@
 package components
 
 import (
-	"fmt"
 	"io"
+	"template"
+	"github.com/skelterjohn/goui"
 	"github.com/skelterjohn/goui/messages"
 )
 
+const ButtonHTMLTemplateFormat = `
+<a href=/m/{{.MName}}>{{.Label}}</a>
+`
+
+var ButtonHTMLTemplate = template.Must(goui.ParseExecTemplate(ButtonHTMLTemplateFormat))
+
+type ButtonData struct {
+	Label string
+	MName string
+}
+
 type Button struct {
-	label string
-	mname string
+	bd ButtonData
 	Click <-chan []byte
 }
 
 func NewButton(label string) (me *Button) {
 	me = new(Button)
-	me.label = label
-	me.mname, me.Click = messages.GetMessenger()
+	me.bd.Label = label
+	me.bd.MName, me.Click = messages.GetMessenger()
 
 	return
 }
 
 func (me *Button) Render(html io.Writer) (e error) {
-	// write some html
-	// connect click to the js on the other end, somehow
-	_, e = fmt.Fprintf(html, "<button label=\"%s\">\n", me.label)
-	if e != nil { panic(e) }
-	_, e = fmt.Fprintf(html, "<a href=/m/%s>click</a>\n", me.mname)
-	_, e = fmt.Fprintf(html, "</button>\n")
-	if e != nil { panic(e) }
-
+	e = ButtonHTMLTemplate.Execute(html, me.bd)
 	return
+}
+
+func (me *Button) Size() (w, h int) {
+	return
+}
+
+func (me *Button) Update() {
+	
 }

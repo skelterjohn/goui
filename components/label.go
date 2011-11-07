@@ -2,33 +2,35 @@ package components
 
 import (
 	"io"
-	"fmt"
+	"template"
+	"github.com/skelterjohn/goui"
 )
+const LabelHTMLTemplateFormat = `
+Label: {{.Text}}
+`
+
+var LabelHTMLTemplate = template.Must(goui.ParseExecTemplate(LabelHTMLTemplateFormat))
+
+type LabelData struct {
+	Text string
+}
 
 type Label struct {
-	text string
+	ld LabelData
 }
 
 func NewLabel(text string) (me *Label) {
 	me = new(Label)
-	me.text = text
+	me.ld.Text = text
 	return
 }
 
 func (me *Label) SetText(text string) {
-	
+	me.ld.Text = text
 }
 
 func (me *Label) Render(html io.Writer) (e error) {
-	// write some html
-	// connect click to the js on the other end, somehow
-	_, e = fmt.Fprintf(html, "<label>\n")
-	if e != nil { panic(e) }
-	_, e = fmt.Fprintf(html, "%s\n", me.text)
-	if e != nil { panic(e) }
-	_, e = fmt.Fprintf(html, "</label>\n")
-	if e != nil { panic(e) }
-
+	e = LabelHTMLTemplate.Execute(html, me.ld)
 	return
 }
 
