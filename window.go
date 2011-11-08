@@ -80,7 +80,6 @@ func (me *Window) Show() {
 }
 
 func (me *Window) serve() {
-
 	h := func(rw http.ResponseWriter, rq *http.Request) {
 		log.Printf("window %s got request\n", me.path)
 		e := me.Render(rw)
@@ -96,16 +95,6 @@ func (me *Window) serve() {
 
 func (me *Window) Render(html io.Writer) (e error) {
 	e = WindowHTMLTemplate.Execute(html, me.wd)
-	/*
-	_, e = fmt.Fprintf(html, "<window title=\"%s\">\n", me.wd.Title)
-	if e != nil { panic(e) }
-	if me.layout != nil {
-		e = me.layout.Render(html)
-		if e != nil { panic(e) }
-	}
-	_, e = fmt.Fprintf(html, "</window>\n")
-	if e != nil { panic(e) }
-	*/
 	return
 }
 
