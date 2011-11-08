@@ -19,7 +19,7 @@ type ButtonData struct {
 }
 
 type Button struct {
-	bd ButtonData
+	bd    ButtonData
 	Click <-chan []byte
 }
 
@@ -41,5 +41,5 @@ func (me *Button) Size() (w, h int) {
 }
 
 func (me *Button) Update() {
-	
+
 }

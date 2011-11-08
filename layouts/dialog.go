@@ -17,14 +17,14 @@ var DialogHTMLTemplate = template.Must(goui.ParseExecTemplate(DialogHTMLTemplate
 
 type DialogData struct {
 	Message goui.Component
-	Button *components.Button
+	Button  *components.Button
 }
 
 type Dialog struct {
 	dd DialogData
 
 	dirty bool
-	w, h int
+	w, h  int
 }
 
 func NewDialog() (me *Dialog) {

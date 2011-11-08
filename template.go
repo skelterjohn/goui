@@ -16,9 +16,9 @@ func compWriter(c Component) (r io.Reader, err error) {
 	return
 }
 
-var execMap = template.FuncMap{ "ComponentWriter": compWriter }
+var execMap = template.FuncMap{"ComponentWriter": compWriter}
 
 func ParseExecTemplate(format string) (t *template.Template, err error) {
-	execTemplate := template.New("ComponentTemplate").Funcs(execMap)	
+	execTemplate := template.New("ComponentTemplate").Funcs(execMap)
 	return execTemplate.Parse(format)
 }

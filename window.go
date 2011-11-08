@@ -21,15 +21,15 @@ const WindowHTMLTemplateFormat = `
 var WindowHTMLTemplate = template.Must(ParseExecTemplate(WindowHTMLTemplateFormat))
 
 type WindowData struct {
-	Title string
+	Title  string
 	Layout Layout
 }
 
 type Window struct {
-	w, h int
+	w, h  int
 	dirty bool
 
-	path string
+	path    string
 	serving bool
 
 	wd WindowData

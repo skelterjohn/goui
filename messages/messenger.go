@@ -23,7 +23,7 @@ func init() {
 }
 
 func GetMessenger() (name string, chs <-chan []byte) {
-	name = <- uniqueNames
+	name = <-uniqueNames
 	ch := make(chan []byte)
 	chs = ch
 

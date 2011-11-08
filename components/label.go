@@ -5,6 +5,7 @@ import (
 	"template"
 	"github.com/skelterjohn/goui"
 )
+
 const LabelHTMLTemplateFormat = `
 Label: {{.Text}}
 `
@@ -35,9 +36,9 @@ func (me *Label) Render(html io.Writer) (e error) {
 }
 
 func (me *Label) Update() {
-	
+
 }
-	
+
 func (me *Label) Size() (w, h int) {
 	return
 }
