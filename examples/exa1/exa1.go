@@ -7,23 +7,28 @@ import (
 )
 
 func main() {
-	window := goui.NewWindow("Example 1", "exa1")
-	window.SetSize(500, 500)
-	window.Center()
-
-	dlayout := layouts.NewDialog()
-	window.SetLayout(dlayout)
 
 	label := components.NewLabel("Here is some text!")
-	dlayout.SetMessage(label)
 	okbutton := components.NewButton("Ok")
-	dlayout.SetButton(okbutton)
+
+	dlayout := layouts.NewDialog()
+	dlayout.SetData(
+		layouts.DialogData{
+			Message: label,
+			Button: okbutton,
+		})
+
+	window := goui.NewWindow("Example 1", "exa1")
+	window.SetData(
+		goui.WindowData {
+			Width:500,
+			Height:500,
+			Layout:dlayout,
+		})
 
 	window.Show()
 
 	<-okbutton.Click
-
-	label.SetText("You just clicked")
 
 	<-window.X
 }

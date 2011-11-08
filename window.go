@@ -13,6 +13,8 @@ const WindowHTMLTemplateFormat = `
 <html>
 <title>{{.Title}}</title>
 <body>
+I wish I was {{.Width}}x{{.Height}}
+<br>
 {{ComponentWriter .Layout}}
 </body>
 </html>
@@ -24,6 +26,7 @@ type WindowData struct {
 	Title         string
 	Layout        Layout
 	Width, Height int
+	Color         string
 }
 
 type Window struct {
@@ -34,28 +37,25 @@ type Window struct {
 
 	data WindowData
 
-	layout Layout
-
 	X <-chan struct{}
 }
 
 func NewWindow(title, path string) (me *Window) {
 	me = new(Window)
 	me.path = path
-	me.SetTitle(title)
+	me.data.Title = title
 	me.SetSize(400, 300)
 	me.dirty = true
 	return
 }
 
-func (me *Window) SetTitle(title string) {
-	me.data.Title = title
+func (me *Window) SetData(data WindowData) {
+	me.data = data
 	me.dirty = true
 }
 
-func (me *Window) SetLayout(layout Layout) {
-	me.layout = layout
-	me.data.Layout = layout
+func (me *Window) GetData() WindowData {
+	return me.data
 }
 
 func (me *Window) SetSize(w, h int) {

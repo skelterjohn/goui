@@ -9,7 +9,9 @@ import (
 
 const DialogHTMLTemplateFormat = `
 Dialog
+<br>
 {{ComponentWriter .Message}}
+<br>
 {{ComponentWriter .Button}}
 `
 
@@ -18,13 +20,13 @@ var DialogHTMLTemplate = template.Must(goui.ParseExecTemplate(DialogHTMLTemplate
 type DialogData struct {
 	Message goui.Component
 	Button  *components.Button
+	Width, Height int
 }
 
 type Dialog struct {
 	data DialogData
 
 	dirty bool
-	w, h  int
 }
 
 func NewDialog() (me *Dialog) {
@@ -33,23 +35,23 @@ func NewDialog() (me *Dialog) {
 	return
 }
 
+func (me *Dialog) SetData(data DialogData) {
+	me.data = data
+	me.dirty = true
+}
+
+func (me *Dialog) GetData() DialogData {
+	return me.data
+}
+
 func (me *Dialog) SetSize(w, h int) {
-	me.w, me.h = w, h
+	me.data.Width, me.data.Height = w, h
+	me.dirty = true
 }
 
 func (me *Dialog) Size() (w, h int) {
-	w, h = me.w, me.h
+	w, h = me.data.Width, me.data.Height
 	return
-}
-
-func (me *Dialog) SetMessage(message goui.Component) {
-	me.data.Message = message
-	me.dirty = true
-}
-
-func (me *Dialog) SetButton(button *components.Button) {
-	me.data.Button = button
-	me.dirty = true
 }
 
 func (me *Dialog) Render(html io.Writer) (e error) {

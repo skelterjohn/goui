@@ -20,6 +20,8 @@ type ButtonData struct {
 
 type Button struct {
 	data  ButtonData
+	dirty bool
+	
 	Click <-chan []byte
 }
 
@@ -29,6 +31,15 @@ func NewButton(label string) (me *Button) {
 	me.data.MName, me.Click = messages.GetMessenger()
 
 	return
+}
+
+func (me *Button) SetData(data ButtonData) {
+	me.data = data
+	me.dirty = true
+}
+
+func (me *Button) GetData() ButtonData {
+	return me.data
 }
 
 func (me *Button) Render(html io.Writer) (e error) {

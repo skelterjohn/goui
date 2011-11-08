@@ -18,6 +18,7 @@ type LabelData struct {
 
 type Label struct {
 	data LabelData
+	dirty bool
 }
 
 func NewLabel(text string) (me *Label) {
@@ -26,8 +27,13 @@ func NewLabel(text string) (me *Label) {
 	return
 }
 
-func (me *Label) SetText(text string) {
-	me.data.Text = text
+func (me *Label) SetData(data LabelData) {
+	me.data = data
+	me.dirty = true
+}
+
+func (me *Label) GetData() LabelData {
+	return me.data
 }
 
 func (me *Label) Render(html io.Writer) (e error) {
