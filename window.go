@@ -21,18 +21,18 @@ const WindowHTMLTemplateFormat = `
 var WindowHTMLTemplate = template.Must(ParseExecTemplate(WindowHTMLTemplateFormat))
 
 type WindowData struct {
-	Title  string
-	Layout Layout
+	Title         string
+	Layout        Layout
+	Width, Height int
 }
 
 type Window struct {
-	w, h  int
 	dirty bool
 
 	path    string
 	serving bool
 
-	wd WindowData
+	data WindowData
 
 	layout Layout
 
@@ -49,17 +49,17 @@ func NewWindow(title, path string) (me *Window) {
 }
 
 func (me *Window) SetTitle(title string) {
-	me.wd.Title = title
+	me.data.Title = title
 	me.dirty = true
 }
 
 func (me *Window) SetLayout(layout Layout) {
 	me.layout = layout
-	me.wd.Layout = layout
+	me.data.Layout = layout
 }
 
 func (me *Window) SetSize(w, h int) {
-	me.w, me.h = w, h
+	me.data.Width, me.data.Height = w, h
 	me.dirty = true
 }
 
@@ -94,7 +94,7 @@ func (me *Window) serve() {
 }
 
 func (me *Window) Render(html io.Writer) (e error) {
-	e = WindowHTMLTemplate.Execute(html, me.wd)
+	e = WindowHTMLTemplate.Execute(html, me.data)
 	return
 }
 

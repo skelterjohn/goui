@@ -19,20 +19,20 @@ type ButtonData struct {
 }
 
 type Button struct {
-	bd    ButtonData
+	data  ButtonData
 	Click <-chan []byte
 }
 
 func NewButton(label string) (me *Button) {
 	me = new(Button)
-	me.bd.Label = label
-	me.bd.MName, me.Click = messages.GetMessenger()
+	me.data.Label = label
+	me.data.MName, me.Click = messages.GetMessenger()
 
 	return
 }
 
 func (me *Button) Render(html io.Writer) (e error) {
-	e = ButtonHTMLTemplate.Execute(html, me.bd)
+	e = ButtonHTMLTemplate.Execute(html, me.data)
 	return
 }
 

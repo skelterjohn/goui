@@ -21,7 +21,7 @@ type DialogData struct {
 }
 
 type Dialog struct {
-	dd DialogData
+	data DialogData
 
 	dirty bool
 	w, h  int
@@ -43,17 +43,17 @@ func (me *Dialog) Size() (w, h int) {
 }
 
 func (me *Dialog) SetMessage(message goui.Component) {
-	me.dd.Message = message
+	me.data.Message = message
 	me.dirty = true
 }
 
 func (me *Dialog) SetButton(button *components.Button) {
-	me.dd.Button = button
+	me.data.Button = button
 	me.dirty = true
 }
 
 func (me *Dialog) Render(html io.Writer) (e error) {
-	e = DialogHTMLTemplate.Execute(html, me.dd)
+	e = DialogHTMLTemplate.Execute(html, me.data)
 	return
 }
 

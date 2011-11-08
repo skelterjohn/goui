@@ -17,21 +17,21 @@ type LabelData struct {
 }
 
 type Label struct {
-	ld LabelData
+	data LabelData
 }
 
 func NewLabel(text string) (me *Label) {
 	me = new(Label)
-	me.ld.Text = text
+	me.data.Text = text
 	return
 }
 
 func (me *Label) SetText(text string) {
-	me.ld.Text = text
+	me.data.Text = text
 }
 
 func (me *Label) Render(html io.Writer) (e error) {
-	e = LabelHTMLTemplate.Execute(html, me.ld)
+	e = LabelHTMLTemplate.Execute(html, me.data)
 	return
 }
 
