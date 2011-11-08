@@ -17,6 +17,7 @@ func init() {
 		for {
 			ids := fmt.Sprintf("n%d", id)
 			ch <- ids
+			id++
 		}
 	}(ch)
 }
