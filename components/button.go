@@ -21,7 +21,7 @@ type ButtonData struct {
 type Button struct {
 	data  ButtonData
 	dirty bool
-	
+
 	Click <-chan []byte
 }
 

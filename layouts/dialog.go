@@ -18,8 +18,8 @@ Dialog
 var DialogHTMLTemplate = template.Must(goui.ParseExecTemplate(DialogHTMLTemplateFormat))
 
 type DialogData struct {
-	Message goui.Component
-	Button  *components.Button
+	Message       goui.Component
+	Button        *components.Button
 	Width, Height int
 }
 

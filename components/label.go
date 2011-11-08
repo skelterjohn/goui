@@ -17,7 +17,7 @@ type LabelData struct {
 }
 
 type Label struct {
-	data LabelData
+	data  LabelData
 	dirty bool
 }
 

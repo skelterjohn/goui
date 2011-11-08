@@ -30,7 +30,7 @@ func GetMessenger() (name string, chs <-chan []byte) {
 	h := func(rw http.ResponseWriter, rq *http.Request) {
 		log.Printf("%s got message\n", name)
 		data, err := ioutil.ReadAll(rq.Body)
-		if err != nil {
+		if err == nil {
 			ch <- data
 		}
 	}
